@@ -1,6 +1,5 @@
 package footway.challenge.physicalProduct.dtos;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,9 +9,8 @@ import jakarta.validation.constraints.Positive;
 public class CreatePhysicalProductDTO {
 
     @NotBlank
-    private final String SKU;
+    private final String sku;
 
-    @NotBlank(message = "EAN is required")
     @Pattern(regexp = "\\d{13}", message = "EAN must be exactly 13 digits")
     private final String ean;
 
@@ -35,7 +33,7 @@ public class CreatePhysicalProductDTO {
 
     public CreatePhysicalProductDTO(String SKU, String ean, String name, String description, double price, String color,
             int size) {
-        this.SKU = SKU;
+        this.sku = SKU;
         this.ean = ean;
         this.name = name;
         this.description = description;
@@ -45,7 +43,7 @@ public class CreatePhysicalProductDTO {
     }
 
     public String getSku() {
-        return SKU;
+        return sku;
     }
 
     public String getEan() {
