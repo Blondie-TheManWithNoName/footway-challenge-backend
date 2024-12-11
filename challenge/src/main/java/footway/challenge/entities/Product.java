@@ -1,113 +1,133 @@
-package footway.challenge.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+// UNUSED PARENT CLASS
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Product {
+// package footway.challenge.entities;
 
-    // * SKU Number */
-    @Id
-    private String SKU;
+// import jakarta.persistence.Column;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.Inheritance;
+// import jakarta.persistence.InheritanceType;
+// import java.util.Objects;
 
-    // * EAN Number */
-    @Column(nullable = true)
-    private String EAN;
+// @Entity
+// @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// public abstract class Product {
 
-    // * Name */
-    @Column(nullable = false)
-    private String name;
+// // * SKU Number */
+// @Id
+// private String sku;
 
-    // * Description */
-    @Column(nullable = false)
-    private String description;
+// // * EAN Number */
+// @Column(nullable = true)
+// private String EAN;
 
-    // * Price */
-    @Column(nullable = false)
-    private double price;
+// // * Name */
+// @Column(nullable = false)
+// private String name;
 
-    // * Variant Color */
-    @Column(nullable = false)
-    private String color;
+// // * Description */
+// @Column(nullable = false)
+// private String description;
 
-    // * Variant Size */
-    @Column(nullable = false)
-    private int size;
+// // * Price */
+// @Column(nullable = false)
+// private double price;
 
-    // * Constructor */
-    public Product(String EAN, String SKU, String name, String description, double price, String color, int size) {
-        this.EAN = EAN;
-        this.SKU = SKU;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.color = color;
-        this.size = size;
-    }
+// // * Variant Color */
+// @Column(nullable = false)
+// private String color;
 
-    public Product() {
-    }
+// // * Variant Size */
+// @Column(nullable = false)
+// private int size;
 
-    // * GETTERS & SETTERS */
+// // * Constructor */
+// public Product(String EAN, String SKU, String name, String description,
+// double price, String color, int size) {
+// this.EAN = EAN;
+// this.sku = SKU;
+// this.name = name;
+// this.description = description;
+// this.price = price;
+// this.color = color;
+// this.size = size;
+// }
 
-    public String getSKU() {
-        return SKU;
-    }
+// public Product() {
+// }
 
-    public void setSKU(String SKU) {
-        this.SKU = SKU;
-    }
+// // * GETTERS & SETTERS */
 
-    public String getEAN() {
-        return EAN;
-    }
+// public String getSku() {
+// return sku;
+// }
 
-    public void setEAN(String EAN) {
-        this.EAN = EAN;
-    }
+// public void setSku(String SKU) {
+// this.sku = SKU;
+// }
 
-    public String getName() {
-        return name;
-    }
+// public String getEAN() {
+// return EAN;
+// }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+// public void setEAN(String EAN) {
+// this.EAN = EAN;
+// }
 
-    public String getDescription() {
-        return description;
-    }
+// public String getName() {
+// return name;
+// }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+// public void setName(String name) {
+// this.name = name;
+// }
 
-    public double getPrice() {
-        return price;
-    }
+// public String getDescription() {
+// return description;
+// }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+// public void setDescription(String description) {
+// this.description = description;
+// }
 
-    public String getColor() {
-        return color;
-    }
+// public double getPrice() {
+// return price;
+// }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+// public void setPrice(double price) {
+// this.price = price;
+// }
 
-    public int getSize() {
-        return size;
-    }
+// public String getColor() {
+// return color;
+// }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+// public void setColor(String color) {
+// this.color = color;
+// }
 
-}
+// public int getSize() {
+// return size;
+// }
+
+// public void setSize(int size) {
+// this.size = size;
+// }
+
+// @Override
+// public boolean equals(Object o) {
+// if (this == o)
+// return true;
+// if (o == null || getClass() != o.getClass())
+// return false;
+// Product product = (Product) o;
+// return Objects.equals(sku, product.sku);
+// }
+
+// @Override
+// public int hashCode() {
+// return Objects.hash(sku);
+// }
+
+// }
