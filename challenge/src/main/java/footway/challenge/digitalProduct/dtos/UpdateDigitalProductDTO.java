@@ -29,7 +29,7 @@ public class UpdateDigitalProductDTO {
     @NotNull()
     private final int size;
 
-    public UpdateDigitalProductDTO(String SKU, String ean, String name, String description, double price, String color,
+    public UpdateDigitalProductDTO(String ean, String name, String description, double price, String color,
             int size) {
         this.ean = ean;
         this.name = name;
