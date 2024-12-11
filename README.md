@@ -20,6 +20,9 @@ The API supports CRUD operations for managing physical and digital products, as 
     - price
     - variants (like size/color)
 - [X] Implement proper error handling
+- [X] Choose and implement an appropriate data storage solution
+- [X] Implement efficient search for free text search (Preferably at the backend/DB level)
+- [X] Create a robust matching suggestion system based on EAN
 
 </br>
 
