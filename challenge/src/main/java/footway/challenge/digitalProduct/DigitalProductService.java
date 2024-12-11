@@ -1,18 +1,22 @@
 package footway.challenge.digitalProduct;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import footway.challenge.entities.DigitalProduct;
+import footway.challenge.entities.PhysicalProduct;
 import footway.challenge.exceptions.ProductAlreadyExistsException;
 import footway.challenge.exceptions.ProductNotFoundException;
 import footway.challenge.exceptions.UnableToDeleteException;
+import footway.challenge.physicalProduct.dtos.PhysicalProductDTO;
 import footway.challenge.digitalProduct.dtos.CreateDigitalProductDTO;
 import footway.challenge.digitalProduct.dtos.DigitalProductDTO;
 import footway.challenge.digitalProduct.dtos.UpdateDigitalProductDTO;
@@ -30,9 +34,17 @@ public class DigitalProductService {
     public Page<DigitalProductDTO> getAllDigitalProducts(int page, int take, String search) {
 
         Pageable pageable = PageRequest.of(page - 1, take, Sort.by("sku"));
+        Page<DigitalProduct> digitalProducts;
 
-        return digitalProductRepo.findByNameAndDescription(search, pageable)
-                .map(role -> new DigitalProductDTO(role.getSku(), role.getEAN(), role.getName()));
+        if (!search.isEmpty())
+            digitalProducts = digitalProductRepo.findByNameAndDescription(search + "*", pageable);
+        else
+            digitalProducts = digitalProductRepo.findAll(pageable);
+
+        return digitalProducts.map(product -> new DigitalProductDTO(
+                product.getSku(),
+                product.getEAN(),
+                product.getName()));
 
     }
 
