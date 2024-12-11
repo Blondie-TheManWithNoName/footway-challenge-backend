@@ -1,7 +1,5 @@
 package footway.challenge;
 
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -9,8 +7,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import footway.challenge.entities.Product;
+import footway.challenge.exceptions.MappingAlreadyExistsException;
 import footway.challenge.exceptions.ProductAlreadyExistsException;
+import footway.challenge.exceptions.UnableToDeleteException;
 import footway.challenge.exceptions.ProductNotFoundException;
 
 import java.util.HashMap;
@@ -21,25 +20,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
 
+    // Data Validation Error Handler
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            errors.put("message", fieldName + ": " + errorMessage);
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ProductAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleDuplicateKeyException(ProductAlreadyExistsException ex) {
+    // Product and Mapping already Exists Handler
+    @ExceptionHandler({ ProductAlreadyExistsException.class, MappingAlreadyExistsException.class,
+            UnableToDeleteException.class })
+    public ResponseEntity<ErrorResponse> handleConflictExceptions(RuntimeException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    // Product Not Found Handler
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    // Internal Server Error Handler
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleInternalServerError(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse("An unexpected error occurred. Please try again later.");
+        System.out.println(ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
