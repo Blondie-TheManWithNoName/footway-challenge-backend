@@ -1,6 +1,6 @@
 # Footway+ Fullstack Challenge | Backend
 
-### This backend challenge was developed using Java 17, the Spring Boot framework, and MySQL.
+### This backend part was developed using Java 17, the Spring Boot framework, and MySQL.
 The API supports CRUD operations for managing physical and digital products, as well as features like product search, order simulation, and mapping between physical and digital products.
 </br>
 
