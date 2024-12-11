@@ -5,22 +5,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import footway.challenge.entities.PhysicalProduct;
 import footway.challenge.physicalProduct.dtos.CreatePhysicalProductDTO;
+import footway.challenge.physicalProduct.dtos.GetAllPhysicalProductsDTO;
+import footway.challenge.physicalProduct.dtos.PhysicalProductDTO;
 import footway.challenge.physicalProduct.dtos.UpdatePhysicalProductDTO;
 import jakarta.validation.Valid;
 
 import java.net.URI;
 import java.util.List;
 
+import org.apache.el.stream.Optional;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class PhysicalProductController {
 
     private final PhysicalProductService physicalProductService;
@@ -30,8 +40,13 @@ public class PhysicalProductController {
     }
 
     @GetMapping("/physical-products")
-    public ResponseEntity<List<PhysicalProduct>> getAllPhysicalProducts() {
-        return ResponseEntity.ok(physicalProductService.getAllPhysicalProducts());
+    public ResponseEntity<Page<PhysicalProductDTO>> getAllPhysicalProducts(
+            @RequestParam(defaultValue = "1", required = false) int page,
+            @RequestParam(defaultValue = "10", required = false) int take,
+            @RequestParam(defaultValue = "", required = false) String search,
+            @RequestParam(defaultValue = "", required = false) String ean) {
+        return ResponseEntity.ok(physicalProductService.getAllPhysicalProducts(new GetAllPhysicalProductsDTO(page, take,
+                search, ean)));
     }
 
     @GetMapping("/physical-products/{SKU}")
